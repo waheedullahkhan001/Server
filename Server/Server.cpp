@@ -66,7 +66,7 @@ int TCPServerStart() {
 	// WSAStartup
 	iWsaStartup = WSAStartup(MAKEWORD(2, 2), &Winsockdata);
 	if (iWsaStartup != 0) {
-		std::cout << "WSAStartUp was Failed!" << std::endl;
+		std::cout << "[Error] WSAStartUp was Failed!" << std::endl;
 	}
 	else {
 		std::cout << "WSAStartup was successful!" << std::endl;
@@ -79,7 +79,7 @@ int TCPServerStart() {
 		// Socket Creation
 		TCPServerSocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 		if (TCPServerSocket == INVALID_SOCKET) {
-			std::cout << "An error occurred while creating TCP socket for server!" << WSAGetLastError() << std::endl;
+			std::cout << "[Error] An error occurred while creating TCP socket for server!" << WSAGetLastError() << std::endl;
 		}
 		else {
 			std::cout << "TCP socket Creation was successful!" << std::endl;
@@ -87,7 +87,7 @@ int TCPServerStart() {
 			// Binding Socket
 			iBind = bind(TCPServerSocket, (SOCKADDR*)&TCPServerAdd, sizeof(TCPServerAdd));
 			if (iBind == SOCKET_ERROR) {
-				std::cout << "An error occurred while binding socket! Error no: " << WSAGetLastError() << std::endl;
+				std::cout << "[Error] An error occurred while binding socket! Error no: " << WSAGetLastError() << std::endl;
 			}
 			else {
 				std::cout << "Binding socket was successful!" << std::endl;
@@ -95,7 +95,7 @@ int TCPServerStart() {
 				// Start Listening
 				iListen = listen(TCPServerSocket, 1);
 				if (iListen == SOCKET_ERROR) {
-					std::cout << "Listen Function was failed! Error no: " << WSAGetLastError() << std::endl;
+					std::cout << "[Error] Listen Function was failed! Error no: " << WSAGetLastError() << std::endl;
 				}
 				else {
 					std::cout << "Listen Function was successful!" << std::endl << "Listening on " << ipAddr << ":" << port << std::endl;
@@ -109,7 +109,7 @@ int TCPServerStart() {
 void AcceptConnection() {
 	sAcceptSocket = accept(TCPServerSocket, (SOCKADDR*)&iTCPClientAdd, &iTCPClientAdd);
 	if (sAcceptSocket == INVALID_SOCKET) {
-		std::cout << "An error occurred while accepting the connection! Error no: " << WSAGetLastError() << std::endl;
+		std::cout << "[Error] An error occurred while accepting the connection! Error no: " << WSAGetLastError() << std::endl;
 	}
 	else {
 		std::cout << "Accepted the connection!" << std::endl << "A client has joined!" << std::endl;
@@ -135,7 +135,7 @@ void SendMsg(std::string msg) {
 
 	// Checking if message was sent successfully
 	if (ErrorInSendMessage) {
-		std::cout << "An error occurred while sending message to client! Error no: " << WSAGetLastError() << std::endl;
+		std::cout << "[Error] An error occurred while sending message to client! Error no: " << WSAGetLastError() << std::endl;
 	}
 	else {
 		std::cout << "Message was sent successfuly!" << std::endl;
@@ -154,7 +154,7 @@ void ReceiveMsg() {
 	while (true) {
 		iRecv = recv(sAcceptSocket, &RecvBuffer, iRecvBuffer, 0);
 		if (iRecv == SOCKET_ERROR) {
-			std::cout << std::endl << "Receive Data Failed! Error no: " << WSAGetLastError() << std::endl;
+			std::cout << std::endl << "[Error] Receive Data Failed! Error no: " << WSAGetLastError() << std::endl;
 		}
 		else {
 			msg += RecvBuffer;
@@ -184,7 +184,7 @@ void ReceiveMsg() {
 void CloseSocket() {
 	iCloseSocket = closesocket(TCPServerSocket);
 	if (iCloseSocket == SOCKET_ERROR) {
-		std::cout << "Closing Socket Failed! Error no: " << WSAGetLastError() << std::endl;
+		std::cout << "[Error] Closing Socket Failed! Error no: " << WSAGetLastError() << std::endl;
 	}
 	else {
 		std::cout << "Closing Socket Success!" << std::endl;
@@ -194,7 +194,7 @@ void CloseSocket() {
 void UDF_WSACleanup() {
 	iWsaCleanup = WSACleanup();
 	if (iWsaCleanup == SOCKET_ERROR) {
-		std::cout << "Cleanup Function Failed! Error no: " << WSAGetLastError() << std::endl;
+		std::cout << "[Error] Cleanup Function Failed! Error no: " << WSAGetLastError() << std::endl;
 	}
 	else {
 		std::cout << "Cleanup Function Success!" << std::endl;
