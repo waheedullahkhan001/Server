@@ -95,10 +95,10 @@ int TCPServerStart() {
 				// Start Listening
 				iListen = listen(TCPServerSocket, 1);
 				if (iListen == SOCKET_ERROR) {
-					std::cout << "Listen Func was failed! Error no: " << WSAGetLastError() << std::endl;
+					std::cout << "Listen Function was failed! Error no: " << WSAGetLastError() << std::endl;
 				}
 				else {
-					std::cout << "Listen Func was successful!" << std::endl << "Listening on " << ipAddr << ":" << port << std::endl;
+					std::cout << "Listen Function was successful!" << std::endl << "Listening on " << ipAddr << ":" << port << std::endl;
 					return 0;
 				}
 			}
@@ -158,15 +158,15 @@ void ReceiveMsg() {
 		}
 		else {
 			msg += RecvBuffer;
-			if ((RecvBuffer == (char)3) && checks == 0) {// && (check1 = false) && (check2 = false) && (check3 = false)
+			if ((RecvBuffer == (char)3) && checks == 0) {
 				checks = 1;
 				tmp += RecvBuffer;
 			}
-			else if ((RecvBuffer == (char)3) && checks == 1) {// && (check1 = true) && (check2 = false) && (check3 = false)
+			else if ((RecvBuffer == (char)3) && checks == 1) {
 				checks = 2;
 				tmp += RecvBuffer;
 			}
-			else if ((RecvBuffer == (char)3) && checks == 2) {// && (check1 = true) && (check2 = true) && (check3 = false)
+			else if ((RecvBuffer == (char)3) && checks == 2) {
 				checks = 3;
 				std::cout << std::endl;
 				break;
@@ -177,17 +177,6 @@ void ReceiveMsg() {
 				std::cout << RecvBuffer;
 				tmp = "";
 			}
-
-			/*std::cout << RecvBuffer;
-			int MsgSize = msg.size();
-			if (msg.size() > 5) {
-				if (msg.substr(msg.size() - 5, msg.size()) == "~#EOM#~") {
-					std::cout << '\b' << " " << '\b' << " " << '\b' << " " << '\b' << " " << '\b' << " ";
-
-					break;
-				}
-			}*/
-
 		}
 	}
 }
@@ -205,9 +194,9 @@ void CloseSocket() {
 void UDF_WSACleanup() {
 	iWsaCleanup = WSACleanup();
 	if (iWsaCleanup == SOCKET_ERROR) {
-		std::cout << "Cleanup Func Failed! Error no: " << WSAGetLastError() << std::endl;
+		std::cout << "Cleanup Function Failed! Error no: " << WSAGetLastError() << std::endl;
 	}
 	else {
-		std::cout << "Cleanup Func Success!" << std::endl;
+		std::cout << "Cleanup Function Success!" << std::endl;
 	}
 }
